@@ -36,7 +36,7 @@
        (rubyfmt--replace-buffer-command (buffer-file-name))
        nil
        "*Rubyfmt Error Buffer*")
-    (message "Set `rubyfmt-binary-path` before using `rubyfmt-format`.")))
+    (error "Set `rubyfmt-binary-path` before using `rubyfmt-format`.")))
 
 (provide 'rubyfmt)
 ;;; rubyfmt.el ends here
