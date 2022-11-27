@@ -25,18 +25,34 @@
 (defcustom rubyfmt-options "--fail-fast --header-opt-out --silence-update-message"
   "Options passed into rubyfmt.")
 
-(defun rubyfmt--replace-buffer-command (file-name)
-  (concat rubyfmt-binary-path " -i " rubyfmt-options " -- " file-name))
+(defun rubyfmt--cmd-with-options ()
+  (concat rubyfmt-binary-path " " rubyfmt-options))
 
 (defun rubyfmt-format ()
   "Runs 'rubyfmt -i' on the current buffer."
   (interactive)
-  (if rubyfmt-binary-path
-      (shell-command
-       (rubyfmt--replace-buffer-command (buffer-file-name))
-       nil
-       "*Rubyfmt Error Buffer*")
-    (error "Set `rubyfmt-binary-path` before using `rubyfmt-format`.")))
+  (let ((outbuf (get-buffer-create "*rubyfmt patch*"))
+        (errbuf (get-buffer-create "*rubyfmt error*")))
+    (with-current-buffer outbuf
+      (erase-buffer))
+    (if (zerop
+         (shell-command-on-region
+          (point-min) (point-max) (rubyfmt--cmd-with-options) outbuf nil errbuf t))
+        (progn
+          (replace-buffer-contents outbuf)
+          (message "Applied rubyfmt to current buffer.")
+          (kill-buffer errbuf))
+      (message "Failed to apply rubyfmt to current buffer."))
+    (kill-buffer outbuf)))
+
+;;;###autoload
+(define-minor-mode rubyfmt-mode
+  "Runs rubyfmt on save."
+  :lighter " Rubyfmt"
+  :global nil
+  (if rubyfmt-mode
+      (add-hook 'before-save-hook 'rubyfmt-format nil 'local)
+    (remove-hook 'before-save-hook 'rubyfmt-format 'local)))
 
 (provide 'rubyfmt)
 ;;; rubyfmt.el ends here

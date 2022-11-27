@@ -17,5 +17,8 @@ Example with use-package:
   :load-path "~/projects/rubyfmt-emacs/"
   :custom
   ;; Point this path to your rubyfmt binary
-  (rubyfmt-binary-path "~/rubyfmt"))
+  (rubyfmt-binary-path "/opt/homebrew/bin/rubyfmt")
+  :config
+  ;; If you want to run format on save
+  (add-hook 'ruby-mode-hook 'rubyfmt-mode))
 ```
