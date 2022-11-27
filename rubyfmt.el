@@ -5,6 +5,8 @@
 ;; URL: https://github.com/mgmarlow/rubyfmt-emacs
 ;; Version: 0.1.0
 
+;; This file is not part of GNU Emacs.
+
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
 ;; the Free Software Foundation, either version 3 of the License, or
@@ -17,6 +19,13 @@
 
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+;;; Commentary:
+;; Formats Ruby code with 'rubyfmt' Use the command 'rubyfmt-format' to
+;; format the current buffer, or enable the 'rubyfmt-mode' minor mode
+;; to format on save.
+
+;;; Code:
 
 (defcustom rubyfmt-binary-path nil
   "Path to rubyfmt binary."
