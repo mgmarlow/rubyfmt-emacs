@@ -42,17 +42,19 @@
   (interactive)
   (let ((outbuf (get-buffer-create "*rubyfmt patch*"))
         (errbuf (get-buffer-create "*rubyfmt error*")))
-    (with-current-buffer outbuf
-      (erase-buffer))
-    (if (zerop
-         (shell-command-on-region
-          (point-min) (point-max) (rubyfmt--cmd-with-options) outbuf nil errbuf t))
-        (progn
-          (replace-buffer-contents outbuf)
-          (message "Applied rubyfmt to current buffer.")
-          (kill-buffer errbuf))
-      (message "Failed to apply rubyfmt to current buffer."))
-    (kill-buffer outbuf)))
+    (save-restriction
+      (widen)
+      (with-current-buffer outbuf
+        (erase-buffer))
+      (if (zerop
+           (shell-command-on-region
+            (point-min) (point-max) (rubyfmt--cmd-with-options) outbuf nil errbuf t))
+          (progn
+            (replace-buffer-contents outbuf)
+            (message "Applied rubyfmt to current buffer.")
+            (kill-buffer errbuf))
+        (message "Failed to apply rubyfmt to current buffer."))
+      (kill-buffer outbuf))))
 
 ;;;###autoload
 (define-minor-mode rubyfmt-mode
