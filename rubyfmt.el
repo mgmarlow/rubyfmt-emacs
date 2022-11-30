@@ -32,13 +32,19 @@
   :type 'string)
 
 (defcustom rubyfmt-options "--fail-fast --header-opt-out --silence-update-message"
-  "Options passed into rubyfmt.")
+  "Options passed into rubyfmt."
+  :type 'string)
 
 (defun rubyfmt--cmd-with-options ()
   (concat rubyfmt-binary-path " " rubyfmt-options))
 
 (defun rubyfmt-format ()
-  "Runs 'rubyfmt -i' on the current buffer."
+  "Format current buffer with rubyfmt.
+
+By default, rubyfmt is called with the following options:
+'--fail-fast --header-opt-out --silence-update-message'.
+You can customize these options by changing the value of
+`rubyfmt-options'."
   (interactive)
   (let ((outbuf (get-buffer-create "*rubyfmt patch*"))
         (errbuf (get-buffer-create "*rubyfmt error*")))
