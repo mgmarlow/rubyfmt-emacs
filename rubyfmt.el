@@ -4,6 +4,7 @@
 ;; Maintainer: Graham Marlow
 ;; URL: https://github.com/mgmarlow/rubyfmt-emacs
 ;; Version: 0.1.0
+;; Package-Requires: ((emacs "26.1"))
 
 ;; This file is not part of GNU Emacs.
 
@@ -27,15 +28,23 @@
 
 ;;; Code:
 
+(defgroup rubyfmt nil
+  "Format ruby code with rubyfmt."
+  :group 'languages
+  :link '(url-link "https://github.com/mgmarlow/rubyfmt-emacs"))
+
 (defcustom rubyfmt-binary-path nil
   "Path to rubyfmt binary."
+  :group 'rubyfmt
   :type 'string)
 
 (defcustom rubyfmt-options "--fail-fast --header-opt-out --silence-update-message"
   "Options passed into rubyfmt."
+  :group 'rubyfmt
   :type 'string)
 
 (defun rubyfmt--cmd-with-options ()
+  "Rubyfmt command with CLI options."
   (concat rubyfmt-binary-path " " rubyfmt-options))
 
 (defun rubyfmt-format ()
