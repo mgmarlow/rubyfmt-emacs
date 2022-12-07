@@ -10,7 +10,7 @@ Clone the repo:
 git clone https://github.com/mgmarlow/rubyfmt-emacs.git ~/projects/rubyfmt-emacs/
 ```
 
-Example with use-package:
+Example configuration with use-package:
 
 ```el
 (use-package rubyfmt
@@ -22,3 +22,12 @@ Example with use-package:
   ;; If you want to run format on save
   (add-hook 'ruby-mode-hook 'rubyfmt-mode))
 ```
+
+## Development
+
+Use [package-lint](https://github.com/purcell/package-lint) to make sure your changes follow Emacs package conventions.
+
+1. Install package-lint in Emacs: `M-x package-install package-lint`
+2. Lint the repo: `make lint`
+
+Optionally, `M-x package-install package-lint-flymake` and use `flymake-mode` when working in `rubyfmt.el`.
