@@ -18,9 +18,8 @@ Example configuration with use-package:
   :custom
   ;; Point this path to your rubyfmt binary
   (rubyfmt-binary-path "/opt/homebrew/bin/rubyfmt")
-  :config
   ;; If you want to run format on save
-  (add-hook 'ruby-mode-hook 'rubyfmt-mode))
+  :hook (ruby-mode . rubyfmt-mode))
 ```
 
 ## Development
